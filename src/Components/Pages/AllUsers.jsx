@@ -29,7 +29,7 @@ const AllUsers = () => {
         
     }, [data])
 
-    if (!data) {
+    if (!alluser) {
         return <p>Loading user data...</p>;  
     }
 
