@@ -1,10 +1,24 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { UseAuth } from "../../AuthUser";
 const AllUsers = () => {
-    const { data } = UseAuth();
-    const [alluser, setAllUser] = useState(data);
+    const [alluser, setAllUser] = useState([]);
     const [searchInput,setSearchInput] = useState("");
+    const FetchData = async () => {
+        try {
+            const response = await fetch('https://jsonplaceholder.typicode.com/users', {
+                method: "GET",
+                headers: {
+                    "content-type": "application/json"
+                },
+            })
+            if (response.ok) {
+                const newData = await response.json();
+                return setAllUser(newData);;
+            }
+        } catch (error) {
+            return alert("error in get from " + error)
+        }
+    }
     const DeleteUser = async (id) => {
         try {
             const response = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
@@ -43,8 +57,8 @@ const AllUsers = () => {
     }
 
     useEffect(() => {
-
-    }, [data])
+        FetchData();
+    }, [])
 
     if (!alluser) {
         return <p>Loading user data...</p>;
