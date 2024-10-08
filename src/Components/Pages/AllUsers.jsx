@@ -27,7 +27,7 @@ const AllUsers = () => {
 
             if (response.ok) {
                 const newData = alluser.filter((ele, i) => {
-                    return i !== id;
+                    return ele.id !== id;
                 })
                 setAllUser(newData);
                 return alert("data deleted successfully");
